@@ -1,4 +1,4 @@
-import { Layout } from "antd";
+import { Layout as LayoutANTD } from "antd";
 
 const contentStyle = {
 	textAlign: 'center',
@@ -10,6 +10,6 @@ const contentStyle = {
 
 export default function Content() {
 	return (
-		<Layout.Content style={contentStyle}>Content</Layout.Content>
+		<LayoutANTD.Content style={contentStyle}>Content</LayoutANTD.Content>
 	)
 }

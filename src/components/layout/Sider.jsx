@@ -1,57 +1,18 @@
-import { useEffect, useState } from "react";
-import { Layout, Card, Statistic, List, Typography, Spin, Tag } from "antd";
+import { Layout as LayoutANTD, Card, Statistic, List, Typography, Tag } from "antd";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { fetchCrypto, fetchAssets } from "../../api";
-import { percentDifference, capitalize } from "../../utils";
+import { capitalize } from "../../utils";
+import { useCrypto } from "../../context/cryptoContext";
 
 const siderStyle = {
 	padding: "1rem",
 };
 
-const data = [
-	"Racing car sprays burning fuel into crowd.",
-	"Japanese princess to wed commoner.",
-	"Australian walks 100km after outback crash.",
-	"Man charged over missing wedding girl.",
-	"Los Angeles battles huge wildfires.",
-];
-
 export default function Sider() {
-	const [loading, setLoading] = useState(false);
-	const [crypto, setCrypto] = useState([]);
-	const [assets, setAssets] = useState([]);
 
-	useEffect(() => {
-		async function preload() {
-			setLoading(true);
-			const { result } = await fetchCrypto();
-			const assets = await fetchAssets();
-			setAssets(
-				assets.map((asset) => {
-					const coin = result.find((c) => c.id === asset.id);
-					return {
-						grow: asset.price < coin.price,
-						growPercent: percentDifference(asset.price, coin.price),
-						totalAmount: asset.amount * coin.price,
-						totalProfit:
-							asset.amount * coin.price -
-							asset.amount * asset.price,
-						...asset,
-					};
-				})
-			);
-			setCrypto(result);
-			setLoading(false);
-		}
-		preload();
-	}, []);
-
-	if (loading) {
-		return <Spin fullscreen />;
-	}
+	const {assets} = useCrypto();
 
 	return (
-		<Layout.Sider
+		<LayoutANTD.Sider
 			width="25%"
 			style={siderStyle}>
 			{assets.map((asset) => (
@@ -86,8 +47,7 @@ export default function Sider() {
 								title: "Asset amount",
 								value: asset.amount,
 								isPlain: true,
-							},
-							// { title: "Difference", value: asset.growPercent },
+							}
 						]}
 						renderItem={(item) => (
 							<List.Item>
@@ -111,18 +71,6 @@ export default function Sider() {
 					/>
 				</Card>
 			))}
-			{/* <Card>
-				<Statistic
-					title="Idle"
-					value={9.3}
-					precision={2}
-					valueStyle={{
-						color: "#cf1322",
-					}}
-					prefix={<ArrowDownOutlined />}
-					suffix="%"
-				/>
-			</Card> */}
-		</Layout.Sider>
+		</LayoutANTD.Sider>
 	);
 }
