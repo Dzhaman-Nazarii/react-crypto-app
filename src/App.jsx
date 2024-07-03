@@ -1,10 +1,16 @@
-import { DatePicker } from "antd";
+import { Layout } from 'antd';
+import Header from './components/layout/Header';
+import Sider from './components/layout/Sider';
+import Content from './components/layout/Content';
 
 export default function App() {
 	return (
-		<>
-			<h1>React Crypto App</h1>
-			<DatePicker />
-		</>
+	<Layout>
+      <Header/>
+      <Layout>
+        <Sider/>
+        <Content/>
+      </Layout>
+    </Layout>
 	);
 }
