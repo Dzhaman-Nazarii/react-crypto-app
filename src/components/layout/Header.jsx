@@ -25,7 +25,7 @@ export default function Header() {
 	const [select, setSelect] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [coin, setCoin] = useState(null);
-	const [drawer, setDrawer] = useState(true);
+	const [drawer, setDrawer] = useState(false);
 	const { crypto } = useCrypto();
 
 	useEffect(() => {
@@ -86,7 +86,7 @@ export default function Header() {
 				onClose={() => setDrawer(false)}
 				open={drawer}
 				destroyOnClose>
-				<AddAssetForm/>
+				<AddAssetForm onClose={()=>setDrawer(false)}/>
 			</Drawer>
 		</LayoutANTD.Header>
 	);
