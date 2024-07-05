@@ -23,6 +23,7 @@ export function CryptoContextProvider({ children }) {
 				totalProfit:
 					asset.amount * coin.price - asset.amount * asset.price,
 				...asset,
+				name: coin.name
 			};
 		});
 	}
